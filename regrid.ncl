@@ -65,8 +65,8 @@ n = 3
 	
     Opt@DstGridType     = "0.25deg"                ; destination grid
     Opt@DstTitle        = "World Grid 0.25 degree resolution"
-    Opt@DstLLCorner     = (/-75.0d, -180.00d /)
-    Opt@DstURCorner     = (/ 75.0d,  179.75d /) 
+    Opt@DstLLCorner     = (/-89.75d, -180.00d /)
+    Opt@DstURCorner     = (/ 89.75d,  179.75d /) 
 
     Opt@Debug           = True
     ;;Opt@PrintTimings  = True
