@@ -4,7 +4,7 @@ import h5py as hp
 import numpy as np
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
-with hp.File("FTLEOutput_global.mat",'r') as loadfile:
+with hp.File("FTLEOutput_global_60km.mat",'r') as loadfile:
     lon = loadfile[loadfile['X'][0, 0]][:]
     lat = loadfile[loadfile['X'][0, 1]][:]
     ftle = loadfile['F'][:]
@@ -15,7 +15,7 @@ lon_max = lon[-1]
 lat_min = lat[0]
 lat_max = lat[-1]
 fig = plt.figure(figsize=(12,12))
-
+print lon_min, lon_max ,lat_min ,lat_max
 m = Basemap(llcrnrlon=lon_min,
             llcrnrlat=lat_min,
             urcrnrlon=lon_max,
@@ -23,7 +23,7 @@ m = Basemap(llcrnrlon=lon_min,
             #lat_0=(lat_max - lat_min)/2,
             #lon_0=(lon_max-lon_min)/2,
             projection='merc',
-            resolution = 'l',
+            resolution = 'c',#'l',
             area_thresh=10000.,
             )
 
