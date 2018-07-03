@@ -4,7 +4,7 @@ import h5py as hp
 import numpy as np
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
-with hp.File("FTLEOutput_global_60km.mat",'r') as loadfile:
+with hp.File("FTLEOutput_60km.mat",'r') as loadfile:
     lon = loadfile[loadfile['X'][0, 0]][:]
     lat = loadfile[loadfile['X'][0, 1]][:]
     ftle = loadfile['F'][:]
@@ -23,25 +23,25 @@ m = Basemap(llcrnrlon=lon_min,
             #lat_0=(lat_max - lat_min)/2,
             #lon_0=(lon_max-lon_min)/2,
             projection='merc',
-            resolution = 'c',#'l',
-            area_thresh=10000.,
+            resolution = 'f',#'l',
+            area_thresh=1000.,
             )
 
 lon, lat = np.meshgrid(lon,lat,indexing='ij')
-#m.pcolormesh(lon,lat,ftle,latlon=True,shading='gourand')
-m.contourf(lon,lat,ftle,latlon=True,levels=np.linspace(0,ftle.max(),3001))
+#m.pcolormesh(lon,lat,ftle,latlon=True,shading='gourand',cmap='viridis')
+m.contourf(lon,lat,ftle,latlon=True,levels=np.linspace(0,ftle.max(axis=None),3001),cmap='viridis')
 plt.colorbar()
 m.drawcoastlines()
 #m.drawrivers()
-#m.drawstates()
+m.drawstates()
 
 m.drawcountries()
-#parallels = np.linspace(lat_min,lat_max,11)
-parallels = np.arange(-60,80,20)
+#parallels = np.arange(-60,80,20)
+parallels = np.arange(np.floor(lat_min),lat_max+2,2)
 m.drawparallels(parallels,labels=[1,0,0,0],fontsize=10)
 # draw meridians
-#meridians = np.linspace(lon_min,lon_max,11)
-meridians = np.arange(-180,180,20)
+#meridians = np.arange(-180,180,20)
+meridians = np.arange(np.floor(lon_max),lon_min-2,-2)
 m.drawmeridians(meridians,labels=[0,0,0,1],fontsize=10)
 plt.show()
 '''
