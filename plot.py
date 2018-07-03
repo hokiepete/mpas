@@ -4,7 +4,7 @@ import h5py as hp
 import numpy as np
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
-with hp.File("FTLEOutput_60km.mat",'r') as loadfile:
+with hp.File("FTLEOutput_global_60km.mat",'r') as loadfile:
     lon = loadfile[loadfile['X'][0, 0]][:]
     lat = loadfile[loadfile['X'][0, 1]][:]
     ftle = loadfile['F'][:]
@@ -29,7 +29,7 @@ m = Basemap(llcrnrlon=lon_min,
 
 lon, lat = np.meshgrid(lon,lat,indexing='ij')
 #m.pcolormesh(lon,lat,ftle,latlon=True,shading='gourand',cmap='viridis')
-m.contourf(lon,lat,ftle,latlon=True,levels=np.linspace(0,ftle.max(axis=None),3001),cmap='viridis')
+m.contourf(lon,lat,ftle,latlon=True,levels=np.linspace(0,ftle.max(axis=None),301),cmap='viridis')
 plt.colorbar()
 m.drawcoastlines()
 #m.drawrivers()
