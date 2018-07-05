@@ -4,7 +4,7 @@ import h5py as hp
 import numpy as np
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
-with hp.File("FTLEOutput_global_60km.mat",'r') as loadfile:
+with hp.File("FTLEOutput_global_120km.mat",'r') as loadfile:
     lon = loadfile[loadfile['X'][0, 0]][:]
     lat = loadfile[loadfile['X'][0, 1]][:]
     ftle = loadfile['F'][:]
@@ -23,27 +23,28 @@ m = Basemap(llcrnrlon=lon_min,
             #lat_0=(lat_max - lat_min)/2,
             #lon_0=(lon_max-lon_min)/2,
             projection='merc',
-            resolution = 'f',#'l',
+            resolution = 'l',
             area_thresh=1000.,
             )
 
 lon, lat = np.meshgrid(lon,lat,indexing='ij')
 #m.pcolormesh(lon,lat,ftle,latlon=True,shading='gourand',cmap='viridis')
-m.contourf(lon,lat,ftle,latlon=True,levels=np.linspace(0,ftle.max(axis=None),301),cmap='viridis')
-plt.colorbar()
+m.contourf(lon,lat,ftle,latlon=True,levels=np.linspace(ftle.min(axis=None),ftle.max(axis=None),301),vmin=0.0,vmax=0.12,cmap='viridis')
+#plt.colorbar()
 m.drawcoastlines()
 #m.drawrivers()
-m.drawstates()
+#m.drawstates()
 
 m.drawcountries()
-#parallels = np.arange(-60,80,20)
-parallels = np.arange(np.floor(lat_min),lat_max+2,2)
+parallels = np.arange(-60,80,20)
+#parallels = np.arange(np.floor(lat_min),lat_max+2,2)
 m.drawparallels(parallels,labels=[1,0,0,0],fontsize=10)
 # draw meridians
-#meridians = np.arange(-180,180,20)
-meridians = np.arange(np.floor(lon_max),lon_min-2,-2)
+meridians = np.arange(-180,180,20)
+#meridians = np.arange(np.floor(lon_max),lon_min-2,-2)
 m.drawmeridians(meridians,labels=[0,0,0,1],fontsize=10)
-plt.show()
+#plt.show()
+plt.savefig('Global_FLTE_120km.tif', transparent=False, bbox_inches='tight')
 '''
 import pandas as pd
 loadfile = pd.read_csv("co.dat", delimiter=" ",names=['uvar','vvar','na'])
